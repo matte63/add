@@ -40,25 +40,23 @@ max() {
 }
 
 add() {
-	start=$(date +%s%N)
 	esp="-3"
 
 	# if at least one number is greater than 100
-	# loses precision but computes faster.
+	# it loses precision but computes faster.
 	if [ $(max $1 $2) -gt $(round $(exp 1 2)) ]
 		then
 			m=$(round $(max $1 $2))
 			esp="-${#m}"
 
 	# if there is at least one number smaller than 100
-	# is more precise but requires more time to compute.
+	# it is more precise but requires more time to compute.
 	elif [ $(min $1 $2) -lt $(round $(exp 1 2)) ]
 		then
 			esp="0"
 	fi
-
+	start=$(date +%s%N)
 	sleep $(exp $1 $esp) $(exp $2 $esp)
-
 	res=$(exp $(($(date +%s%N) - $start)) $((-$esp - 9)))
 
 	# format (round) result
@@ -67,4 +65,5 @@ add() {
 }
 
 # test
-echo $(add 200 103)
+echo "200 + 105 = $(add 212 95)"
+echo "8 + 15 = $(add 8 15)"
